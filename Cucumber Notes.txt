@@ -1,0 +1,244 @@
+Cucumber Tool:
+=============
+Cucumber is a tool to achieve BDD(Behaviour Driven Development) framework.
+
+Requirements will be written in plain English Language(Gerkin language).
+Using which even Non-technical members can understand.
+which functionality is under test and how we carry out that testing.
+
+Steps:(Main 3 components)
+=====
+1.Create a Maven project
+2.Add dependencies
+3.Dowload cucumber plugin from Eclipse MarketPlace.
+
+3 Major components:
+==================
+1.Feature files   -----------Steps in plain english language
+2.Stepdefinition class-------coding
+3.TestRunner class
+
+Dependencies:
+============
+(io.cucumber)
+Cucumber java 4.8.0
+Cucumber junit 4.8.0
+
+(api.cucumber)
+Cucumber java 4.2.0
+Cucumber junit 4.2.0
+
+(info.cukes)
+Cucumber java 1.2.5
+Cucumber junit 1.2.5
+Cucumber core 1.2.5
+gherkin 2.12.2
+
+
+Login:
+======
+
+Given--ChromeLaunch
+And--URL
+And--Maximize 
+And--Implicity wait             ---Given (precondition)
+
+email --- emailadd
+pass ---- 123445               ----when (Action)
+
+login --click
+snap --                        ----Then
+
+
+Gherkin keywords:
+=================
+1.Feature: Feature defines the functionality which is under test 
+Eg: To validate Login functionlity of xyz application
+
+2.Scenario: In that particular functionality, what exact case we are testing 
+Eg:
+Scenario:To validate login with invalid username and invalid password ----sce 1
+Scenario:To validate login with empty username and empty password ----sce 2
+Scenario:To validate login with valid username and empty password
+Scenario:To validate login with valid username and valid password 
+Scenario:To validate login with invalid username and valid password 
+Scenario:To validate login with empty username and valid password 
+
+3. Given: Precondition
+
+4. When: Action
+
+5. Then: Post condition
+
+6. And: Extra or additional condition
+
+7. But: Negative condition
+
+Feature file :
+==============
+We have to creaate feature file in src/test/resources
+
+src/test/resource ------------> create a folder (FeatureFiles) ------> Create a file ----> (feature file --- filename.feature)
+
+dryRun:
+=======
+dryRun = false(default value)
+It will lead for normal excution of all scenarios and at the end of excution it will generate snippets for undefined steps.
+
+dryRun = true
+It will skip the normal excution of all scenarios and at the end of excution it will only generate snippets for undefined steps.
+
+monochrome:
+==========
+monochrome=false(default value)
+In case of 4.2.0 there will be unclear output representation in console
+To make it readable we can change monochrome as true
+
+stepNotification 
+=================
+stepNotification = true  -> for to view the all steps(Given, when, then, and ....) in console wheather it's passed or not
+
+Strict:
+=======
+By default strict will be set as false
+when strict=false, Scenario will be excuted normally.
+At the end, for undefined steps snippets will be generated and the
+build is marked as passed.
+
+when strict=true, Scenario will be excuted normally.
+At the end, for undefined steps snippets will be generated and the
+build will be marked as failed when it has some undefined steps.
+
+
+Name:
+=====
+when we give this options with name which is contain in scenario. that particular scenario only picked up and will get executed.
+
+Background:
+===========
+we have to give in feature file level.
+It will be running before the excution of all the scenarios in particular feature file.
+
+Hooks:
+======
+@Before and @After annotations manintained in a separate class.
+Hooks is maintained in separate class under Stepdefinition package.
+
+@Before   -- will be running before the excution of all the scenarios in all Feature files.
+@After    -- will be running after the excution of all the scenarios in all Feature files.
+
+
+Hooks vs Background:
+====================
+->Use Background when you provide customer-readable pre-conditions to your scenarios
+->Use Before when you have to do some technical setup before your scenarios
+
+But the main thing to understand here is the order of the operations:
+Before Hook 1 -> Before Hook 2 -> ... -> Background -> Scenario
+
+
+DataTable:
+==========
+Passing Data under particular step of a Scenario.
+
+Types:
+
+Without Header(List)
+====================
+1 Dimensional List
+   0            1             2            3          4             
+|java      |python      |selenium   |  devops   | manual  |  -------> 1 List<String>
+
+2 Dimensional List
+
+    0            1             2
+|selenium|Greens@gmail.com|123456    |   ----------->List 1     List<List<String>>
+|java2@  |python23        |13242     |   ----------->List 2     List<List<String>>
+|Java989 |Greens          |testing132|   ----------->List 3     List<List<String>>
+
+WithHeader :
+===========
+1. Dimensional Map
+
+   Key         value
+|Username  | Anitha   |
+|passWord  | 12345436 |
+|Email     |Greens@gamil.com|
+
+2.Dimensional map
+
+|Username |PassWord  |phoneNumber |     ------>Key
+|Anu      |asadffs123|9872436761  |     ------>value1 ----0
+|Banu     |sda123sadf|8904715638  |     ------>value2 ----1
+|Ram      |2314325   |431465465   |     ------>value3 ----2
+
+
+Diff b/w Scenario and Scenario Outline
+======================================
+Scenario --- will be executed only once
+Scenario Outline---Will be always accompained with Examples tag where we can store
+the bulk of data(Both positive and negative testcase datas we can store).
+Same scenario will get executed multiple times till we have data in Examples tag.
+Number of iterations is based on the number of sets of data we have in Exampls tag. 
+
+
+Diff b/w Scenario Outline and Datatable:
+========================================
+Scenario outline:
+Using scenario outline we can pass the data from Examples tag to any step of the Scenario Outline.
+
+DataTable: 
+Using we can pass the data to a particular step only. Under the Step we need to maintain the data.
+We can consider the data as List, List<List>, Map and List<Map>.
+
+Diff b/w Hooks and Background:
+=============================
+The difference is when it is run. The background is run before each of your scenarios but after any of your Before Hooks
+
+Background: feature file level will be running before the execution of all the Scenario
+in particular feature file.
+
+Hooks:
+======
+@Before and @After annotations maintained in a Separate Class.
+Hooks is maintained in separate Class under StepDefinition package.
+
+@Before  -- will be running before the excution of all the scenario in all Feature file
+@After -- will be running after the execution of all the scenario in all Feature file.
+
+Ordered Hooks:
+==============
+@Before will always running in incremental order(1,2,3,....)
+@After will always running in decremental order(3,2,1....)
+
+@Before(order=1)
+@Before(order=2)
+@Before(order=3)
+
+@After(order=3)
+@After(order=2)
+@After(order=1)
+
+Tags:
+====
+-Using tags we can group the different scenario or feature file
+tags can be given in feature level as well as in scenario level
+tags={"@smoke"} --------- particular tag will alone execute
+tags={"not  @smoke"} or tags={"~@smoke"}   ----------- ignore particular tag
+tags={"@smoke,@sanity"} or tags={@smoke or @sanity} ---------OR operator
+tags={"@smoke","@sanity"} or tags={"@smoke and @sanity"} -------AND operator
+
+Cucumber 'Tags Option' syntax is updated for newer versions.
+Please use tags = "@tag-name" instead of tags = {"@tag-name"}
+Basically, no need of using {} anymore.
+
+Tagged Hooks:
+=============
+Tags+Hooks
+
+Tags ------- using tags, u can run only particular group of scenarios
+
+
+Reporting:
+==========
+plugin option is used to generate reports
